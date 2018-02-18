@@ -19,9 +19,7 @@ open class SwiftyVersionTracker<T: SwiftyVersion> {
 		let build: String?
 	}
 
-	open var isFirstLaunchEver: Bool {
-		return history.count <= 1
-	}
+	public private (set) var isFirstLaunchEver: Bool = false
 
 	open var isFirstLaunchForVersion: Bool
 
@@ -72,6 +70,8 @@ open class SwiftyVersionTracker<T: SwiftyVersion> {
 		} else if self.userDefaults.value(forKey: SwiftyVersionTrackerSaveKey) != nil {
 			// invalid object
 			SwiftyVersionTracker<T>.deleteData(userDefaults: self.userDefaults)
+		} else {
+			isFirstLaunchEver = true
 		}
 
 		// set current
